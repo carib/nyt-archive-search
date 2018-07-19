@@ -18,7 +18,7 @@ export class ArchiveService {
     console.log('search date: ', date);
     console.log(`${this.baseUrl}fq=pub_date:("${date}")&api-key=${this.key}`);
     const archiveResults$ = this.httpClient
-    .get(`${this.baseUrl}pub_date=${date}&api-key=${this.key}`, { headers: this.getHeaders() })
+    .get<HttpResponse<any>>(`${this.baseUrl}pub_date=${date}&api-key=${this.key}`, { headers: this.getHeaders() })
     .pipe(
       map(mapResults),
     );
@@ -34,7 +34,6 @@ export class ArchiveService {
 }
 
 function mapResults(response: HttpResponse<ArchiveResult[]>): ArchiveResult[] {
-  console.log(response);
 
   return response.response.docs.map(toArchiveResult);
 }
