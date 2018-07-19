@@ -1,30 +1,34 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Date } from '../date';
+import { FormDate } from '../form-date';
 import { ArchiveService } from '../archive.service';
 
 @Component({
   selector: 'app-date-form',
-  templateUrl: './date-form.component.html',
-  styleUrls: ['./date-form.component.css']
+  template: `
+    <h3>Enter a date after Sept. 18, 1851 (YYYY/MM/DD)</h3>
+    <form #dateForm="ngForm">
+      <div>
+        <label for="day">Day (DD):</label>
+        <input type="number" name='day' [(ngModel)]="date.day" #day="ngModel">
+      </div>
+      <div>
+        <label for="month">Month (MM):</label>
+        <input type="number" name='month' [(ngModel)]="date.month" #month="ngModel">
+      </div>
+      <div>
+        <label for="year">Year (YYYY):</label>
+        <input type="number" name='year'  [(ngModel)]="date.year" #year="ngModel">
+      </div>
+      <button [routerLink]="['/archive', date.day, date.month, date.year]">Search</button>
+    </form>
+  `,
+  styleUrls: ["./date-form.component.css"]
 })
 export class DateFormComponent implements OnInit {
-  constructor(private archiveService: ArchiveService) { }
+  @Input() date: FormDate;
+  constructor(private archiveService: ArchiveService) {}
 
   ngOnInit() {
-
-  }
-
-  searchArchive() {
-    let day = this.date.day;
-    let month = this.date.month;
-    if (this.date.day < 10) {
-      day = `0${this.date.day}`;
-    }
-    if (this.date.month < 10) {
-      month = `0${this.date.month}`;
-    }
-    const date = `${this.date.year}-${month}-${day}`;
-
-    this.archiveService.getAll(date);
+    this.date = new FormDate();
   }
 }

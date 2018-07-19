@@ -1,0 +1,8 @@
+<button (click)="goToDateSelection()">Select New Date</button>
+<br/>
+<br/>
+<div *ngFor='let result of archiveResults' class='archive-result'>
+  <img src="{{ result.img_url }}">
+  <a href="{{ result.web_url }}">{{ result.headline }}</a>
+  <p>{{ result.snippet }}</p>
+</div>

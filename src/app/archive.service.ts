@@ -9,18 +9,19 @@ import { ArchiveResult } from './archive-result';
   providedIn: 'root'
 })
 export class ArchiveService {
-  private baseUrl: string = 'http://api.nytimes.com/svc/search/v2/articlesearch.json?fq=source:("The New York Times")';
+  private baseUrl: string = 'http://api.nytimes.com/svc/search/v2/articlesearch.json?';
   private key = '1d525e59e820461a9cad754e7896032a';
+
   constructor(private httpClient: HttpClient) { }
 
   getAll(date?: string): Observable<ArchiveResult[]> {
-    console.log(date);
+    console.log('search date: ', date);
+    console.log(`${this.baseUrl}fq=pub_date:("${date}")&api-key=${this.key}`);
     const archiveResults$ = this.httpClient
-    .get<ArchiveResult[]>(`${this.baseUrl}&pub_date=(${date})&api-key=${this.key}`, { headers: this.getHeaders() })
+    .get(`${this.baseUrl}pub_date=${date}&api-key=${this.key}`, { headers: this.getHeaders() })
     .pipe(
       map(mapResults),
     );
-    console.log(archiveResults$);
 
     return archiveResults$;
   }
@@ -49,7 +50,6 @@ function toArchiveResult(r: any): ArchiveResult {
     abstract: r.abstract,
     img_url: extractImg(r),
   };
-  // console.log('Parsed result:', result);
   return result;
 }
 

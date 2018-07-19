@@ -1,25 +1,61 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from "@angular/router";
-import { Observable } from "rxjs";
 import { ArchiveResult } from '../archive-result';
 import { ArchiveService } from '../archive.service';
+import { FormDate } from '../form-date';
+
 
 @Component({
   selector: "app-archive-list",
-  template: `
-    <div *ngFor='let result of archiveResults | async' class='archive-result'>
-      <img src="{{ result.img_url }}">
-      <a href="{{ result.web_url }}">{{ result.headline }}</a>
-      <p>{{ result.snippet }}</p>
-    </div>
-  `,
+  templateUrl: './archive-list.component.html',
   styleUrls: ["./archive-list.component.css"]
 })
 export class ArchiveListComponent implements OnInit {
-  archiveResults: Observable<ArchiveResult[]>;
-  constructor(private archiveService: ArchiveService) {}
+  archiveResults: ArchiveResult[];
+  date: FormDate;
+  sub: any;
+  constructor(
+    private archiveService: ArchiveService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {}
 
   ngOnInit() {
-    this.archiveResults = this.archiveService.getAll("1984-05-11");
+    this.date = new FormDate();
+    this.sub = this.route.params.subscribe(params => {
+      this.date.day = Number.parseInt(params["day"]);
+      this.date.month = Number.parseInt(params["month"]);
+      this.date.year = Number.parseInt(params["year"]);
+      this.searchArchive();
+    });
+  }
+
+  ngOnDestroy() {
+    this.sub.unsubscribe();
+  }
+
+  goToDateSelection() {
+    window.history.back();
+  }
+
+  searchArchive() {
+    let day;
+    let month;
+    if (this.date.day < 10) {
+      day = `0${this.date.day}`;
+    } else {
+      day = this.date.day;
+    }
+    if (this.date.month < 10) {
+      month = `0${this.date.month}`;
+    } else {
+      month = this.date.month;
+    }
+    const date = `${this.date.year}-${month}-${day}`;
+    console.log('DATE:', date);
+
+    this.archiveService
+      .getAll(date)
+      .subscribe(a => this.archiveResults = a);
   }
 }
