@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PuzzleComponent } from './puzzle.component';
+import { DateFormComponent } from './date-form.component';
 
-describe('PuzzleComponent', () => {
-  let component: PuzzleComponent;
-  let fixture: ComponentFixture<PuzzleComponent>;
+describe('DateFormComponent', () => {
+  let component: DateFormComponent;
+  let fixture: ComponentFixture<DateFormComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PuzzleComponent ]
+      declarations: [ DateFormComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PuzzleComponent);
+    fixture = TestBed.createComponent(DateFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -1,0 +1,15 @@
+<form #dateForm="ngForm">
+  <div>
+    <label for="day">Day (DD):</label>
+    <input type="number" name='day' maxlength=2 minlength=2 size=2 required [(ngModel)]="date.day" #day="ngModel">
+  </div>
+  <div>
+    <label for="month">Month (MM):</label>
+    <input type="number" name='month' maxlength=2 minlength=2 size=2 required [(ngModel)]="date.month" #month="ngModel">
+  </div>
+  <div>
+    <label for="year">Year (YYYY):</label>
+    <input type="number" name='year' maxlength=4 minlength=4 size=4 required [(ngModel)]="date.year" #year="ngModel">
+  </div>
+  <button (click)="searchArchive()">Search</button>
+</form>

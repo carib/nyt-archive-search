@@ -1,13 +1,14 @@
 import { Component } from '@angular/core';
-import { PuzzleService } from './puzzle.service';
+import { ArchiveService } from './archive.service';
+import { Date } from './date';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
-  providers: [PuzzleService],
+  providers: [ArchiveService],
 })
 
 export class AppComponent {
-  title = 'NYT Crossword Search';
+  title = 'NYT Archive Search';
 }

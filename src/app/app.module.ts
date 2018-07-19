@@ -5,12 +5,15 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { PuzzleComponent } from './puzzle/puzzle.component';
+import { ArchiveListComponent } from './archive-list/archive-list.component';
+import { ArchiveService } from './archive.service';
+import { DateFormComponent } from './date-form/date-form.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    PuzzleComponent
+    ArchiveListComponent,
+    DateFormComponent,
   ],
   imports: [
     BrowserModule,
@@ -18,7 +21,7 @@ import { PuzzleComponent } from './puzzle/puzzle.component';
     HttpClientModule,
     FormsModule,
   ],
-  providers: [],
+  providers: [ArchiveService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
